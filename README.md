@@ -10,3 +10,29 @@ get notifier() {
   return this.notifier = document.getElementById('bookmarked-notification-anchor');
 },
 ```
+
+## Use curly braces with switch
+It is support for scopes in switch also
+```javascript
+//not:
+(({ someProp }, otherVar) => {
+switch (expression)
+  case 'onething': 
+    const { someProp } = otherVar     // Doing this yesterday made a lot of mess in the scope.
+                                      // Babel did not throw even tho 'someProp' was in the
+    return someProp                   // scope already.
+}
+)(someVar)
+```
+
+```javascript
+//do:
+(({ someProp }, otherVar) => {
+switch (expression)
+  case 'onething': {
+    const { someProp } = otherVar           // Now it got it's own scope!
+    return someProp
+  }
+}
+)(someVar)
+```
