@@ -19,8 +19,8 @@ It is support for scopes in switch also
 switch (expression)
   case 'onething': 
     const { someProp } = otherVar     // Doing this yesterday made a lot of mess in the scope.
-                                      // Babel did not throw even tho 'someProp' was in the
-    return someProp                   // scope already.
+    return someProp                   // Babel did not throw even tho 'someProp' was in the
+                                      // scope already.
 }
 )(someVar)
 ```
@@ -31,7 +31,7 @@ switch (expression)
 switch (expression)
   case 'onething': {
     const { someProp } = otherVar           // Now it got it's own scope!
-    return someProp
+    return someProp   
   }
 }
 )(someVar)
