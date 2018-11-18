@@ -20,6 +20,8 @@ augroup END
 ```
 (source: https://github.com/andymass/vim-matchup)
 
+## Search
+
 ### Search from pattern to pattern across lines
 By example, in an array like this, to match render property and the whole value:
 
