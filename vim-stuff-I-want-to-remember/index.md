@@ -19,3 +19,48 @@ autocmd ColorScheme * hi MatchParen guifg=red
 augroup END
 ```
 (source: https://github.com/andymass/vim-matchup)
+
+### Search from pattern to pattern across lines
+By example, in an array like this, to match render property and the whole value:
+
+```javascript
+const Routes = [
+{
+    path: `/${lang}/devices`,
+    component: DevicesContainer,
+    render: (props) => (
+      <DevicesContainer {...props} footer={footer} />
+    )
+  },
+
+  {
+    path: `/${lang}/features`
+    component: FeaturesContainer,
+    render: (props) => (
+      <FeaturesContainer {...props} footer={footer} />
+      )
+  },
+
+  {
+    path: `/${lang}/resources`,
+    component: ResourcesContainer,
+    render: (props)=> (
+      <ResourcesContainer {...props} />
+      )
+  }
+
+]
+```
+do
+```vim
+/
+" and then
+^\s*render:\_.\{-}\ze\(  },\|  }\n\_.\{-}]\)
+```
+
+do quickly delete them all:
+```vim
+"first
+dgn
+"then repitedly
+.
