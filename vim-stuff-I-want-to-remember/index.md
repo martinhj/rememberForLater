@@ -55,10 +55,15 @@ do
 ```vim
 /
 " and then
-^\s*render:\_.\{-}\ze\(  },\|  }\n\_.\{-}]\)
+^\s*render:\_.\{-}\ze\(  },\|  }\n\.\{-}]\)
+"           ^^ ^^^          ^^^^^^^^^^^^^
+"            \   \                \
+"             `---\----------------\------------------- any char including \n
+"                  `----------------\------------------ repeat as few times as possible (lazy repeating)
+"                                    `----------------- setup a match for the `render:` in the last elem in the array
 ```
 
-do quickly delete them all:
+quickly delete them all:
 ```vim
 "first
 dgn
