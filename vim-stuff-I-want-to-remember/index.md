@@ -22,6 +22,14 @@ augroup END
 
 ## Search
 
+### Lookahead/behind
+```vim
+\@=  "Positive lookahead
+\@!  "Negative lookahead
+\@<= "Positive lookbehind
+\@<! "Negative lookbehind
+```
+
 ### Search from pattern to pattern across lines
 By example, in an array like this, to match render property and the whole value:
 
