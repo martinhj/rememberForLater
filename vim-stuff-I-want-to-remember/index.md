@@ -71,3 +71,10 @@ quickly delete them all:
 dgn
 "then repitedly
 .
+```
+
+## Git
+### Stash current file
+```vim
+:!Git stash push -- %
+```
