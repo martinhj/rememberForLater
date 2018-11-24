@@ -1,6 +1,5 @@
 # Reference arguments from last typed command
-
-```sh
+```bash
 # the last argument
 !$
 # all the arguments
@@ -12,5 +11,5 @@
 # arguments from the second to the last one
 !:2-$
 # last command executed
-$:0
+!:0
 ```
