@@ -9,3 +9,13 @@ routes.reduce(
   {}
 )
 ```
+
+### [].concat to easily flatten nested arrays
+
+```javascript
+routes = [
+  [`/en-us`, [ `/`, `/route`, `/anotherRoute` ]]
+  [`/ja-jp`, [ `/`, `/route`, `/anotherRoute` ]]
+]
+routes.reduce((acc, cur) => (acc.concat(...cur)), [])
+```
