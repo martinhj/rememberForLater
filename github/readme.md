@@ -14,7 +14,7 @@ Use it to emphasize changes in question.
     use: [{
       loader: 'file-loader'
     }]
-```
+\`\`\`
 ```
 
 To get something like:
