@@ -81,6 +81,14 @@ dgn
 .
 ```
 
+## vinegar
+˙˙˙vim
+~
+y.
+.   " -> :file
+!   " -> :!file
+˙˙˙
+
 ## Git
 ### Stash current file
 ```vim
