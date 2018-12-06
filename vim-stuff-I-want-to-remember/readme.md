@@ -87,6 +87,8 @@ dgn
 :Git! stash push -- %
 ```
 
+### Move and remove files and update references in vim's buffers
 ```vim
-:!Git stash push -- %
+:Gmove
+:Gremove
 ```
