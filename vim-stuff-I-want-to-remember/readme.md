@@ -82,12 +82,12 @@ dgn
 ```
 
 ## vinegar
-˙˙˙vim
+```vim
 ~
 y.
 .   " -> :file
 !   " -> :!file
-˙˙˙
+```
 
 ## Git
 ### Stash current file
