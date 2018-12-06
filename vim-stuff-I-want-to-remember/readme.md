@@ -84,5 +84,9 @@ dgn
 ## Git
 ### Stash current file
 ```vim
+:Git! stash push -- %
+```
+
+```vim
 :!Git stash push -- %
 ```
