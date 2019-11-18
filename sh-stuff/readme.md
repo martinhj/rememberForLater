@@ -223,3 +223,16 @@ Is the fetched data in cache older than ten minutes?
   -> Is the data fetched within the last 5 seconds:
     Yes: -> Return the cached data and only this
     No:  -> Return cached data and start fetch (prefetch) the data and when complete put it in cache ready for next request.
+
+```diff
+-const lastFetchTime = null;
+-const isFetching = false;
++let cachedApi = {
++  fetchTime: Date.now();
++  api: Promise.resolve(fetchedApi);
++}
+
+-const api = fetchedApi;
++const api = Promise.resolve(fetchedApi); // in the other route we are returning the whole promise. To be consistent we also have to return a promise here (thus a resolved one).
+
+```
