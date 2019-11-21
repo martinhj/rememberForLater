@@ -14,6 +14,105 @@
 !:0
 ```
 
+## Find files that is added to a Git repository
+
+```sh
+cat .gitignore |grep -v "^#" |grep -v "^$" | xargs -I @ sh -c 'echo @   -- -- -- --; find . -name @' > ignored.log
+```
+(branch really, needs to changed to find files accross all branches)
+
+```bash
+cat .gitignore|
+```
+Print out all the lines in gitignore to find out what is ignored and pipe it to:
+
+```bash
+grep -v "^#" |
+```
+Match all lines starting (`^`) with `#` since they are considered comments
+With the `-v` flag we inverse the match and therefore _ignore_ them.
+and pipe the rest to:
+
+```bash
+grep -v "^$" |
+```
+With this line we utilize the same `-v` flag to filter out lines that has nothing between the start (`^`) and the end (`$`), 
+it filtering out all the empty lines and pipe the rest to:
+
+```bash
+xargs -I @ 
+```
+With xargs we can use the output from what's inputted as arguments to other commands (here: what's piped into it,
+everything that happens on it's left hand side). With `-I @` we can set a placeholder for the arguments that is set
+up and is then used in:
+
+```bash
+sh -c 'echo @   -- -- -- --;  find . -name @' > ignored.log'
+```
+Here the patterns from `.gitignore` is first printed to screen with `echo` as a headline, plus som arbiterary lines
+so it is possible to recognize them from what we're actually looking for:
+
+The result from `find`. `find`'s first argument is where to look, and here is `.` the `cwd` - the Current Working
+Directory. Further we use `-name @` that tells `find` what pattern to match where `@` is replaced with what was fed
+into `xargs`.
+
+And last `> ignored.log` is _redirecting_ the response to the file `ignored.log` instead of printing it out to screen so we can review it laterThat could be swapped out with `less` instead if you want to review it instantly but still how the
+control of the text (`less` will fill the screen from top to bottom and wait for your input (usually `space`) before
+adwancing further in the text:
+```diff
+-sh -c 'echo @   -- -- -- --;  find . -name @' > ignored.log'
++sh -c 'echo @   -- -- -- --;  find . -name @' |less'
+```
+
+We could also refine the matcher for comments, since in `.gitignore` and many other places a comment started with `#`
+starts on any line from the `#` making everything on it's right hand to the end of the line a comment.
+
+```diff
+// Does not work!
+-grep -v "^#"
++grep -v "#.*$"
+```
+By changing the matching pattern to `#.*$` we would match everything (`.*`) to right of the `#` until the end of line `$`.
+(`.*` matches, in most cases, any character except the newline character). But the way grep work, it will display the whole line that got a match, or with `-v` it will hide the whole line. This will then remove all lines with comments, also the pattern we actually want to extract:
+
+```gitignore
+# a comment here
+*.mobileprovision # a comment about this...
+*.orig.*
+```
+would be transformed into
+```gitignore
+*.orig.*
+```
+not
+```gitignore
+*.mobileprovision
+*.orig.*
+```
+
+If we instead take the matching pattern `#.*$` and do
+```diff
+-grep -v "^#"
++sed 's/#.*$//'
+```
+turning our line into
+```bash
+cat .gitignore |sed 's/#.*$// |grep -v "^$" | xargs -I @ sh -c 'echo @   -- -- -- --; find . -name @' > ignored.log
+```
+`sed` will use the argument given `s/#.*$//` and according to that change everything that is matched (between the first two `/`: `#.*$`) with the replacement (between the two last `/`: ` `). So
+```gitignore
+# a comment here
+*.mobileprovision # a comment about this...
+*.orig.*
+```
+will turn into
+```gitignore
+
+*.mobileprovision
+*.orig.*
+```
+That we get more empty lines does not matter since we remove these with the `grep -v "^$"` afterwards.
+
 ## How I parallelized my web server test
 
 Here I am hitting the web server with 1000 requests running in parallel. The `-P N` argument to xargs sets the number of parallel processes.
